@@ -5,13 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 
-public class Solution1 {
+public class Solution2 {
 
     public static boolean canProduceValue(BigInteger[][] nums, int val, BigInteger tot, int next, BigInteger targetValue) {
         if (next >= nums[val].length) return tot.equals(targetValue);
 
+        String left = tot.toString();
+        String right = nums[val][next].toString();
+        BigInteger concatination = new BigInteger(left + right);
+
         return canProduceValue(nums, val, tot.add(nums[val][next]), next + 1, targetValue) ||
-                canProduceValue(nums, val, tot.multiply(nums[val][next]), next + 1, targetValue);
+                    canProduceValue(nums, val, tot.multiply(nums[val][next]), next + 1, targetValue) ||
+                        canProduceValue(nums, val, concatination, next + 1, targetValue);
     }
 
     public static void main(String[] args) throws IOException {
